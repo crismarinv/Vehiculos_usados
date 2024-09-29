@@ -1,0 +1,43 @@
+<project name="VehiculosUsados" default="run" basedir=".">
+    
+    <!-- Directorios del proyecto -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+
+    <!-- Target para limpiar el directorio de compilación -->
+    <target name="clean">
+        <echo message="Limpiando directorio de compilación..."/>
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Target para crear los directorios si no existen -->
+    <target name="init">
+        <echo message="Creando directorios necesarios..."/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <!-- Target para compilar el proyecto -->
+    <target name="compile" depends="init" description="Compilando las clases del proyecto...">
+        <echo message="Compilando código fuente..."/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}">
+            <!-- Usar el classpath configurado por Eclipse -->
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Target para ejecutar la aplicación -->
+    <target name="run" depends="compile" description="Ejecutando la aplicación...">
+        <echo message="Ejecutando la aplicación principal..."/>
+        <java classname="dao.Main" fork="true">
+            <classpath>
+                <!-- Incluye las clases compiladas en el classpath -->
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+    
+</project>
